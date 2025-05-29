@@ -22,6 +22,8 @@ jobs:
   Tag-Commit-Version:
     name: Tag
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       version_value: ${{ steps.calculate.outputs.version_value }}
     steps:
@@ -61,6 +63,8 @@ jobs:
           echo New version tag value: $VERSION_VALUE
           echo "version_value=$VERSION_VALUE" >> $GITHUB_OUTPUT
 
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag "$VERSION_VALUE"
           git push origin tag "$VERSION_VALUE"
         env:
