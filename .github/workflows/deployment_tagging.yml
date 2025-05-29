@@ -41,7 +41,7 @@ jobs:
           [ "$REPO_NAME" ] || { echo "No repository name ?!"; exit 1; }
           echo Repository name: $REPO_NAME
           
-          BASE_SHA=$(git merge-base HEAD "$INPUT_DEV_BRANCH" 2>/dev/null)
+          BASE_SHA=$(git merge-base HEAD "$INPUT_DEV_BRANCH")
           [ "$BASE_SHA" ] || { echo "No merge base found!"; exit 1; }
           echo Merge base SHA: $BASE_SHA
 
