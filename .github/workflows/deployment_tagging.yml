@@ -16,6 +16,7 @@ on:
     outputs:
       version_value:
         description: 'Generated version tag.'
+        value: ${{ jobs.Tag-Commit-Version.outputs.version_value }}
 
 jobs:
   Tag-Commit-Version:
