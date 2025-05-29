@@ -1,0 +1,50 @@
+name: Deployment Version Tagger
+run-name: ${{ github.actor }} is tagging ${{ gihub.ref }} for deployment.
+
+on:
+  workflow_call:
+    inputs:
+      dev-branch:
+        description: 'The branch that feature changes are merged to and from where a release is cut. Default: `develop`.'
+        required: false
+        default: 'develop'
+      suffix:
+        description: 'A suffix to add to the version tag, may be empty. Default: empty'
+        required: false
+    outputs:
+      version_value:
+        description: 'Generated version tag.'
+
+jobs:
+  Tag-Commit-Version:
+    name: Tag
+    runs-on: ubuntu-latest
+    outputs:
+      version_value: ${{ steps.calculate.outputs.version_value }}
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          sparse-checkout: |
+            non_existent_file.md
+          
+      - name: Calculate version tag
+        id: calculate
+        run: |
+          BASE_SHA=$(git merge-base HEAD $INPUT_DEV_BRANCH 2>/dev/null)
+          [ "$BASE_SHA" ] || { echo "No merge base found!"; exit 1; }
+
+          RELEASE_DATETIME=$(git log -1 --format=%cI "$BASE_SHA" 2>/dev/null)
+          [ "$RELEASE_DATETIME" ] || { echo "No datetime found for the release!"; exit 1; }
+
+          RELEASE_DATE_UTC=$(date --utc --date="$RELEASE_DATETIME" +%Y-%m-%d 2>/dev/null | cut -d'T' -f1)
+          [ "$RELEASE_DATE_UTC" ] || { echo "No UTC date found for the release!"; exit 1; }
+
+          CURRENT_PATCH=$(git tag --list "$RELEASE_DATE_UTC*" 2>/dev/null | sort | tail -n 1)
+          CURRENT_PATCH=$([[ "$CURRENT_PATCH" =~ -p([0-9]+)$ ]] && echo "${BASH_REMATCH[1]}" || echo 0)
+          NEXT_PATCH=$((CURRENT_PATCH + 1))
+          echo "version_value=$RELEASE_DATE_UTC-p$NEXT_PATCH" >> $GITHUB_OUTPUT
+      - uses: rickstaa/action-create-tag@v1.7.2
+        with:
+          tag: ${{ steps.calculate.outputs.version_value }}
