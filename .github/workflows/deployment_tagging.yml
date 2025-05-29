@@ -6,10 +6,12 @@ on:
     inputs:
       dev-branch:
         description: 'The branch that feature changes are merged to and from where a release is cut. Default: `develop`.'
+        type: string
         required: false
         default: 'develop'
       suffix:
         description: 'A suffix to add to the version tag in addition to the repo name, may be empty. Default: empty'
+        type: string
         required: false
     outputs:
       version_value:
@@ -27,7 +29,7 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
           sparse-checkout: |
-            non_existent_file.md
+            .gitignore
           
       - name: Calculate version tag
         id: calculate
@@ -36,7 +38,7 @@ jobs:
           [ "$REPO_NAME" ] || { echo "No repository name ?!"; exit 1; }
           
           
-          BASE_SHA=$(git merge-base HEAD $INPUT_DEV_BRANCH 2>/dev/null)
+          BASE_SHA=$(git merge-base HEAD "$INPUT_DEV_BRANCH" 2>/dev/null)
           [ "$BASE_SHA" ] || { echo "No merge base found!"; exit 1; }
 
           RELEASE_DATETIME=$(git log -1 --format=%cI "$BASE_SHA" 2>/dev/null)
@@ -48,7 +50,7 @@ jobs:
           CURRENT_PATCH=$(git tag --list "$RELEASE_DATE_UTC*" 2>/dev/null | sort | tail -n 1)
           CURRENT_PATCH=$([[ "$CURRENT_PATCH" =~ -p([0-9]+)-.*$ ]] && echo "${BASH_REMATCH[1]}" || echo 0)
           NEXT_PATCH=$((CURRENT_PATCH + 1))
-          SUFFIX=$([[ "$INPUT_SUFFIX" ]] && echo "-$INPUT_SUFFIX" })
+          SUFFIX=$([[ "$INPUT_SUFFIX" ]] && echo "-$INPUT_SUFFIX" )
           echo "version_value=$RELEASE_DATE_UTC-p$NEXT_PATCH$REPO_NAME$SUFFIX" >> $GITHUB_OUTPUT
         env:
           INPUT_DEV_BRANCH: ${{ inputs.dev-branch }}
