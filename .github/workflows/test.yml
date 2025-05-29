@@ -1,0 +1,14 @@
+name: Run Reusable Workflow
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+      - release
+
+jobs:
+  call-reusable:
+    uses: .github/workflows/deployment-tagging.yml@develop # or your branch
+    with:
+      suffix: "submodule"
