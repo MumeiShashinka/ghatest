@@ -1,0 +1,15 @@
+name: Run Reusable Workflow
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+      - release
+
+jobs:
+  call-reusable:
+    uses: .github/workflows/reusable.yml@main # or your branch
+    with:
+      input_one: "value1"
+      input_two: "value2"
