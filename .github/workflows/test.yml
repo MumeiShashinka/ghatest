@@ -9,6 +9,8 @@ on:
 
 jobs:
   call-reusable:
+    permissions:
+      contents: write
     uses: ./.github/workflows/deployment_tagging.yml
     with:
       suffix: 'submodule'
