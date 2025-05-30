@@ -11,6 +11,6 @@ jobs:
   call-reusable:
     permissions:
       contents: write
-    uses: ./.github/workflows/deployment_tagging.yml
+    uses: tier4/WebAutoIaCGitHubActions/.github/workflows/deployment_tagging.yml@main
     with:
-      suffix: 'submodule'
+      suffix: ''
