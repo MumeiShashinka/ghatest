@@ -30,4 +30,6 @@ runs:
 
     - id: compute-and-tag
       shell: bash
-      run: ./scripts/tag-deployment.sh
+      run: |
+        pwd
+        ./scripts/tag-deployment.sh
