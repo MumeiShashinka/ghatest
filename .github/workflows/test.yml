@@ -14,6 +14,6 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/tag-deployment@develop
+      - uses: ./.github/actions/tag-deployment
         with:
           suffix: ''
