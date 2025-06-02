@@ -23,7 +23,6 @@ runs:
         fetch-depth: 0
         fetch-tags: true
         sparse-checkout: |
-          .gitignore
 
     - id: compute-and-tag
       shell: bash
