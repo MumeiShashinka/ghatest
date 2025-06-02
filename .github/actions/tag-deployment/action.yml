@@ -27,4 +27,4 @@ runs:
 
     - id: compute-and-tag
       shell: bash
-      run: ./scripts/tag-deployment.sh
+      run: ./.github/actions/tag-deployment/scripts/tag-deployment.sh
