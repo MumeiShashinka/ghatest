@@ -23,5 +23,5 @@ runs:
       run: |
         "${{ github.action_path }}/tag-deployment.sh"
       env:
-        DEVELOP: ${{ dev-branch }}
-        SUFFIX: ${{ suffix }}
+        DEVELOP: ${{ inputs.dev-branch }}
+        SUFFIX: ${{ inputs.suffix }}
