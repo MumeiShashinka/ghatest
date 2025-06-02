@@ -18,21 +18,10 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Set GitHub Path
-      run: |
-        echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
-        echo "$GITHUB_ACTION_PATH"
-        pwd
-        ls -lah
-      shell: bash
-      env:
-        GITHUB_ACTION_PATH: ${{ github.action_path }}
-
     - id: compute-and-tag
       shell: bash
       run: |
-        pwd
-        ls -lah
-        echo $GITHUB_PATH
-        ls -lah $GITHUB_PATH
         "${{ github.action_path }}/tag-deployment.sh"
+      env:
+        DEVELOP: ${{ dev-branch }}
+        SUFFIX: ${{ suffix }}
