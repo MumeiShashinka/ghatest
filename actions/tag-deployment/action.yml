@@ -26,6 +26,12 @@ runs:
           README.md
         sparse-checkout-cone-mode: false
 
+    - name: Set GitHub Path
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+
     - id: compute-and-tag
       shell: bash
-      run: ./.github/actions/tag-deployment/scripts/tag-deployment.sh
+      run: ./scripts/tag-deployment.sh
