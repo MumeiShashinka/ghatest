@@ -11,6 +11,6 @@ jobs:
   tag-push:
     permissions:
       contents: write
-    uses: ./.github/actions/tag-deployment
+    uses: ./.github/actions/tag-deployment@develop
     with:
       suffix: ''
