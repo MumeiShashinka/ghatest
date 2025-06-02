@@ -35,4 +35,4 @@ runs:
         ls -lah
         echo $GITHUB_PATH
         ls -lah $GITHUB_PATH
-        ./tag-deployment.sh
+        "${{ github.action_path }}/tag-deployment.sh"
