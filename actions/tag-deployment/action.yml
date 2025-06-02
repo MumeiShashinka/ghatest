@@ -19,7 +19,11 @@ runs:
   using: composite
   steps:
     - name: Set GitHub Path
-      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      run: |
+        echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+        echo "$GITHUB_ACTION_PATH"
+        pwd
+        ls -lahR
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
