@@ -32,4 +32,4 @@ runs:
       shell: bash
       run: |
         pwd
-        ./scripts/tag-deployment.sh
+        ./tag-deployment.sh
