@@ -1,4 +1,4 @@
-name: Run Reusable Workflow
+name: Tagging workflow.
 
 on:
   push:
@@ -8,9 +8,9 @@ on:
       - release
 
 jobs:
-  call-reusable:
+  tag-push:
     permissions:
       contents: write
-    uses: tier4/WebAutoIaCGitHubActions/.github/workflows/deployment_tagging.yml@main
+    uses: ./.github/actions/tag-deployment
     with:
       suffix: ''

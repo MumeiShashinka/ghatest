@@ -1,0 +1,30 @@
+name: Deployment Tagger
+description: Tags a commit to be deployed with a deployment version tag.
+
+inputs:
+  dev-branch:
+    description: 'The branch that feature changes are merged to and from where a release is cut. Default: `develop`'
+    type: string
+    required: false
+    default: 'develop'
+  suffix:
+    description: 'A suffix to add to the version tag in addition to the repo name, may be empty. Default: empty'
+    type: string
+    required: false
+outputs:
+  tag_value:
+    description: 'Generated version tag.'
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4.2.2
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+        sparse-checkout: |
+          .gitignore
+
+    - id: compute-and-tag
+      shell: bash
+      run: ./scripts/tag-deployment.sh
