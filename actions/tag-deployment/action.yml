@@ -27,11 +27,17 @@ runs:
         sparse-checkout-cone-mode: false
 
     - name: Set GitHub Path
-      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      run: |
+        echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+        pwd
+        ls -lahR
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
 
     - id: compute-and-tag
       shell: bash
-      run: ./scripts/tag-deployment.sh
+      run: |
+        pwd
+        ls -lahR
+        ./scripts/tag-deployment.sh
