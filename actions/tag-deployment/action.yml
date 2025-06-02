@@ -18,26 +18,12 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        fetch-tags: true
-        sparse-checkout: |
-          README.md
-        sparse-checkout-cone-mode: false
-
     - name: Set GitHub Path
-      run: |
-        echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
-        pwd
-        ls -lahR
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
 
     - id: compute-and-tag
       shell: bash
-      run: |
-        pwd
-        ls -lahR
-        ./scripts/tag-deployment.sh
+      run: ./scripts/tag-deployment.sh
