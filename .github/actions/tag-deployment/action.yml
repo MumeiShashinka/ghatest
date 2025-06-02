@@ -18,12 +18,13 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v4.2.2
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         fetch-tags: true
         sparse-checkout: |
           README.md
+        sparse-checkout-cone-mode: false
 
     - id: compute-and-tag
       shell: bash
