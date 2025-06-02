@@ -23,6 +23,7 @@ runs:
         fetch-depth: 0
         fetch-tags: true
         sparse-checkout: |
+          README.md
 
     - id: compute-and-tag
       shell: bash
