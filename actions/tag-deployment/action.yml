@@ -23,7 +23,7 @@ runs:
         echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
         echo "$GITHUB_ACTION_PATH"
         pwd
-        ls -lahR
+        ls -lah
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
@@ -32,4 +32,7 @@ runs:
       shell: bash
       run: |
         pwd
+        ls -lah
+        echo $GITHUB_PATH
+        ls -lah $GITHUB_PATH
         ./tag-deployment.sh
